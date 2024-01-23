@@ -33,10 +33,15 @@ public class Library {
         //Qaytarilan streamde eger tapibsa bir kitab olacaq(1 ad ve muellifde)
         //findFirst() hemin kiatbi goturur() varsa
         //ifPresentOrElse kitab var ya yox varsa neylesin yoxdusa ne
-       mybooks.stream().filter(existingBook->existingBook.getName().equals(book1.getName()) &&
-               existingBook.getAuthor().equals(book1.getAuthor()))
-               .findFirst()
-               .ifPresentOrElse(existingBook->existingBook.increaseCount(book1.getCount()), ()-> mybooks.add(book1));
+        Optional<Book> existingBook=mybooks.stream().filter(book->book.getName().equals(book1.getName()) &&
+                        book.getAuthor().equals(book1.getAuthor()))
+               .findFirst();
+
+
+        existingBook.ifPresentOrElse(
+                book -> book.increaseCount(book1.getCount()),
+                () -> mybooks.add(book1)
+        );
 
     }
 
